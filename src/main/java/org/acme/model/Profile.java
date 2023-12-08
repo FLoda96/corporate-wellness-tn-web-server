@@ -6,11 +6,13 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 // TO DO : Define constants to build queries with
+// TO DO : Define more precise constraints for the fields and validate json fields before doing stuff
 // Note that for some reason the name of the class and the name of the table must be the same
 @Entity
-@Table(name = "Utente")
-@NamedQuery(name = "Utente.findAll", query = "SELECT u FROM Utente u")
-public class Utente {
+@Table(name = "Profile")
+@NamedQuery(name = "Profile.findAll", query = "SELECT u FROM Profile u")
+@NamedQuery(name = "Profile.findByEmail", query = "SELECT u FROM Profile u WHERE u.email = :email")
+public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("user_id")
@@ -39,9 +41,9 @@ public class Utente {
     @JsonProperty("heart_rate")
     private BigDecimal heart_rate;
 
-    public Utente() {}
+    public Profile() {}
 
-    public Utente(
+    public Profile(
             @JsonProperty("name") String name,
             @JsonProperty("surname") String surname,
             @JsonProperty("email") String email,
@@ -64,7 +66,7 @@ public class Utente {
 
     @Override
     public String toString() {
-        return "Utente{" +
+        return "Profile{" +
                 "name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", email='" + email + '\'' +
@@ -140,11 +142,21 @@ public class Utente {
         this.height = height;
     }
 
-    public void setWeight(BigDecimal weight) {
-        this.weight = weight;
-    }
-
+    public void setWeight(BigDecimal weight) { this.weight = weight; }
     public void setHeart_rate(BigDecimal heart_rate) {
         this.heart_rate = heart_rate;
     }
+
+    public static void updateProfile(Profile profile1, Profile profile2) {
+        profile1.setName(profile2.getName());
+        profile1.setSurname(profile2.getSurname());
+        profile1.setEmail(profile2.getEmail());
+        profile1.setNickname(profile2.getNickname());
+        profile1.setSex(profile2.getSex());
+        profile1.setHeight(profile2.getHeight());
+        profile1.setWeight(profile2.getWeight());
+        profile1.setHeart_rate(profile2.getHeart_rate());
+    }
+
+
 }

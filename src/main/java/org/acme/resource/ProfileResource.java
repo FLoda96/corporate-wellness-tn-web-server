@@ -5,11 +5,11 @@ import java.util.List;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.acme.model.Utente;
+import org.acme.model.Profile;
 import org.jboss.logging.Logger;
 
 @Path("/profile")
@@ -21,23 +21,57 @@ public class ProfileResource {
     EntityManager entityManager;
     private static final Logger LOG = Logger.getLogger(ProfileResource.class);
     @GET
-    public List<Utente> GetUsers() {
-        return entityManager.createNamedQuery("Utente.findAll", Utente.class)
+    @Path("/all")
+    public List<Profile> GetUsers() {
+        return entityManager.createNamedQuery("Profile.findAll", Profile.class)
                 .getResultList();
+    }
+
+    @GET
+    @Path("/{email}")
+    public Profile GetUsersbyEmail(String email) {
+        try {
+            return entityManager.createNamedQuery("Profile.findByEmail", Profile.class)
+                    .setParameter("email", email)
+                    .getSingleResult();
+        } catch (NoResultException nre) {
+            return null;
+        }
     }
 
     @POST
     @Transactional
-    public Response Register(Utente user) {
+    public Response Register(Profile user) {
         LOG.info(user.toString());
-        LOG.info(user.getEmail());
-        LOG.info(user.getEmail() != null);
-        if (user.getEmail() == null) {
-            throw new WebApplicationException("Id was invalidly set on request.", 422);
+        Profile profile = null;
+        try {
+             profile = entityManager.createNamedQuery("Profile.findByEmail", Profile.class)
+                    .setParameter("email", user.getEmail()).getSingleResult();
+        } catch (NoResultException nre) {
+            // Nothing happens, not finding anything it's a normal situation
         }
-        //LOG.info(user.toString());
+        if (profile != null) {
+            return Response.ok("Email already present").status(400).build();
+        }
+        if (user.getEmail() == null) {
+            throw new WebApplicationException("Invalid user.", 422);
+        }
         entityManager.persist(user);
         return Response.ok(user).status(201).build();
-        // TO DO: Actual Logic
+    }
+
+    @PUT
+    @Transactional
+    public Response Update(Profile user) {
+        Profile profile = null;
+        try {
+            profile = entityManager.createNamedQuery("Profile.findByEmail", Profile.class)
+                    .setParameter("email", user.getEmail()).getSingleResult();
+        } catch (NoResultException nre) {
+            return Response.ok("The selected user do not exist").status(400).build();
+        }
+        Profile.updateProfile(profile, user);
+        entityManager.merge(profile);
+        return Response.ok(profile).status(200).build();
     }
 }
