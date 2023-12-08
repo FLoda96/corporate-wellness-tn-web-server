@@ -1,36 +1,43 @@
 package org.acme.resource;
 
+import java.util.List;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.acme.model.User;
+import org.acme.model.Utente;
 import org.jboss.logging.Logger;
 
 @Path("/profile")
+@ApplicationScoped
+@Produces("application/json")
+@Consumes("application/json")
 public class ProfileResource {
-
+    @Inject
+    EntityManager entityManager;
     private static final Logger LOG = Logger.getLogger(ProfileResource.class);
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String Register() {
-        return "Profile!";
+    public List<Utente> GetUsers() {
+        return entityManager.createNamedQuery("Utente.findAll", Utente.class)
+                .getResultList();
     }
 
     @POST
-    @Produces(MediaType.TEXT_PLAIN)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response Register(User user) {
-        int OperationCode = 0;
+    @Transactional
+    public Response Register(Utente user) {
         LOG.info(user.toString());
-        // TO DO: Actual Logic
-
-        // Assuming OperationCode indicates success (you can modify this condition based on your logic)
-        if (user != null) {
-            // Return a 201 Created response
-            return Response.status(Response.Status.CREATED).build();
-        } else {
-            // You can handle other cases and return different status codes if needed
-            return Response.status(Response.Status.BAD_REQUEST).build();
+        LOG.info(user.getEmail());
+        LOG.info(user.getEmail() != null);
+        if (user.getEmail() == null) {
+            throw new WebApplicationException("Id was invalidly set on request.", 422);
         }
+        //LOG.info(user.toString());
+        entityManager.persist(user);
+        return Response.ok(user).status(201).build();
+        // TO DO: Actual Logic
     }
 }
