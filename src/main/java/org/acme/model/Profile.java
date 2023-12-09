@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 @Table(name = "Profile")
 @NamedQuery(name = "Profile.findAll", query = "SELECT u FROM Profile u")
 @NamedQuery(name = "Profile.findByEmail", query = "SELECT u FROM Profile u WHERE u.email = :email")
+@NamedQuery(name = "Profile.findById", query = "SELECT u FROM Profile u WHERE u.user_id = :user_id")
 public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -157,6 +158,4 @@ public class Profile {
         profile1.setWeight(profile2.getWeight());
         profile1.setHeart_rate(profile2.getHeart_rate());
     }
-
-
 }

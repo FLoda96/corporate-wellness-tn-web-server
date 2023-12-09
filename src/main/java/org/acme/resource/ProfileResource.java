@@ -22,14 +22,14 @@ public class ProfileResource {
     private static final Logger LOG = Logger.getLogger(ProfileResource.class);
     @GET
     @Path("/all")
-    public List<Profile> GetUsers() {
+    public List<Profile> GetAllUsers() {
         return entityManager.createNamedQuery("Profile.findAll", Profile.class)
                 .getResultList();
     }
 
     @GET
     @Path("/{email}")
-    public Profile GetUsersbyEmail(String email) {
+    public Profile GetUserbyEmail(String email) {
         try {
             return entityManager.createNamedQuery("Profile.findByEmail", Profile.class)
                     .setParameter("email", email)
@@ -73,5 +73,21 @@ public class ProfileResource {
         Profile.updateProfile(profile, user);
         entityManager.merge(profile);
         return Response.ok(profile).status(200).build();
+    }
+
+    @DELETE
+    @Transactional
+    @Path("/{user_id}")
+    public Response Delete (String user_id) {
+        LOG.info("user_id : " + user_id);
+        Profile profile = null;
+        try {
+            profile = entityManager.createNamedQuery("Profile.findById", Profile.class)
+                    .setParameter("user_id", user_id).getSingleResult();
+        } catch (NoResultException nre) {
+            return Response.ok("The selected user do not exist").status(400).build();
+        }
+        entityManager.remove(profile);
+        return Response.ok("profile removed").status(200).build();
     }
 }
