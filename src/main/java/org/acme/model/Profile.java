@@ -16,29 +16,31 @@ import java.math.BigDecimal;
 public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     @JsonProperty("user_id")
     private Integer user_id;
-    //@JsonProperty("name")
+    @Column(name = "name")
+    @JsonProperty("name")
     private String name;
-
+    @Column(name = "surname")
     @JsonProperty("surname")
     private String surname;
-
+    @Column(name = "email")
     @JsonProperty("email")
     private String email;
-
+    @Column(name = "nickname")
     @JsonProperty("nickname")
     private String nickname;
-
+    @Column(name = "sex")
     @JsonProperty("sex")
     private String sex;
-
+    @Column(name = "height")
     @JsonProperty("height")
     private BigDecimal height;
-
+    @Column(name = "weight")
     @JsonProperty("weight")
     private BigDecimal weight;
-
+    @Column(name = "heart_rate")
     @JsonProperty("heart_rate")
     private BigDecimal heart_rate;
 
