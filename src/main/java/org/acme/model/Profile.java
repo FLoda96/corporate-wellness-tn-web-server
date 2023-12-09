@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 
 // TO DO : Define constants to build queries with
 // TO DO : Define more precise constraints for the fields and validate json fields before doing stuff
+// TO DO : Do query parameter validation before
 // Note that for some reason the name of the class and the name of the table must be the same
 @Entity
 @Table(name = "Profile")
@@ -14,32 +15,41 @@ import java.math.BigDecimal;
 @NamedQuery(name = "Profile.findByEmail", query = "SELECT u FROM Profile u WHERE u.email = :email")
 @NamedQuery(name = "Profile.findById", query = "SELECT u FROM Profile u WHERE u.user_id = :user_id")
 public class Profile {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     @JsonProperty("user_id")
     private Integer user_id;
+
     @Column(name = "name")
     @JsonProperty("name")
     private String name;
+
     @Column(name = "surname")
     @JsonProperty("surname")
     private String surname;
+
     @Column(name = "email")
     @JsonProperty("email")
     private String email;
+
     @Column(name = "nickname")
     @JsonProperty("nickname")
     private String nickname;
+
     @Column(name = "sex")
     @JsonProperty("sex")
     private String sex;
+
     @Column(name = "height")
     @JsonProperty("height")
     private BigDecimal height;
+
     @Column(name = "weight")
     @JsonProperty("weight")
     private BigDecimal weight;
+
     @Column(name = "heart_rate")
     @JsonProperty("heart_rate")
     private BigDecimal heart_rate;
