@@ -6,6 +6,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
+import jakarta.persistence.PersistenceException;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
@@ -56,8 +57,12 @@ public class ProfileResource {
         if (user.getEmail() == null) {
             throw new WebApplicationException("Invalid user.", 422);
         }
-        entityManager.persist(user);
-        return Response.ok(user).status(201).build();
+        try {
+            entityManager.persist(user);
+            return Response.ok(user).status(201).build();
+        } catch (PersistenceException pe) {
+            return Response.ok("The operation failed").status(500).build();
+        }
     }
 
     @PUT
@@ -71,8 +76,12 @@ public class ProfileResource {
             return Response.ok("The selected user do not exist").status(400).build();
         }
         Profile.updateProfile(profile, user);
-        entityManager.merge(profile);
-        return Response.ok(profile).status(200).build();
+        try {
+            entityManager.merge(profile);
+            return Response.ok(profile).status(200).build();
+        } catch (PersistenceException pe) {
+            return Response.ok("The operation failed").status(500).build();
+        }
     }
 
     @DELETE
@@ -87,7 +96,11 @@ public class ProfileResource {
         } catch (NoResultException nre) {
             return Response.ok("The selected user do not exist").status(400).build();
         }
-        entityManager.remove(profile);
-        return Response.ok("profile removed").status(200).build();
+        try {
+            entityManager.remove(profile);
+            return Response.ok("profile removed").status(200).build();
+        } catch (PersistenceException pe) {
+            return Response.ok("The operation failed").status(500).build();
+        }
     }
 }
