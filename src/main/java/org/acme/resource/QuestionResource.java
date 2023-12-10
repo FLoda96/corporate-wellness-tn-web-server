@@ -11,7 +11,6 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 import org.acme.model.Question;
-import org.acme.model.RoutePerformance;
 import org.jboss.logging.Logger;
 
 @Path("/question")

@@ -116,8 +116,8 @@ CREATE TABLE corporate_wellness.question (
     question_text TEXT NOT NULL
 );
 
-CREATE TABLE corporate_wellness.response (
-    response_id SERIAL PRIMARY KEY,
+CREATE TABLE corporate_wellness.answer (
+    answer_id SERIAL PRIMARY KEY,
     user_id INT NOT NULL references corporate_wellness.profile(user_id),
     questionnaire_id INTEGER REFERENCES corporate_wellness.questionnaire(questionnaire_id),
     question_id INTEGER REFERENCES corporate_wellness.question(question_id),
