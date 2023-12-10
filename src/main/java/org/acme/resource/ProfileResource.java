@@ -88,7 +88,6 @@ public class ProfileResource {
     @Transactional
     @Path("/{user_id}")
     public Response Delete (String user_id) {
-        LOG.info("user_id : " + user_id);
         Profile profile = null;
         try {
             profile = entityManager.createNamedQuery("Profile.findById", Profile.class)

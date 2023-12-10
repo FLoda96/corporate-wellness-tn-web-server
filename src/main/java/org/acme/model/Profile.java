@@ -8,6 +8,9 @@ import java.math.BigDecimal;
 // TO DO : Define constants to build queries with
 // TO DO : Define more precise constraints for the fields and validate json fields before doing stuff
 // TO DO : Do query parameter validation before
+// TO DO : Implement https and authentication to the API calls
+// TO DO : Debate whether to add ON DELETE CASCADE on the dependent records or create a custom function for the deletion of a profile
+// TO DO : Account for the first weight/heart_rate value since it's not catched by the update function
 // Note that for some reason the name of the class and the name of the table must be the same
 @Entity
 @Table(name = "Profile")
