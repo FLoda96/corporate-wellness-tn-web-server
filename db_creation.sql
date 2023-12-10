@@ -1,6 +1,16 @@
+CREATE TABLE IF NOT EXISTS corporate_wellness.company
+(
+    company_id SERIAL PRIMARY KEY,
+    name varchar(255),
+    location varchar(255)
+);
+
+---------------------------------------------------------------------
+
 CREATE TABLE IF NOT EXISTS corporate_wellness.profile
 (
     user_id SERIAL PRIMARY KEY,
+    company_id INT NOT NULL REFERENCES corporate_wellness.company(company_id),
     name varchar(255),
     surname varchar(255),
     email varchar(255) NOT NULL UNIQUE,
@@ -8,7 +18,7 @@ CREATE TABLE IF NOT EXISTS corporate_wellness.profile
     sex varchar(255),
     height numeric(6,2),
     weight numeric(6,2),
-    heart_rate numeric(6,2),
+    heart_rate numeric(6,2)
 );
 
 ---------------------------------------------------------------------
@@ -16,6 +26,7 @@ CREATE TABLE IF NOT EXISTS corporate_wellness.profile
 CREATE TABLE IF NOT EXISTS corporate_wellness.route
 (
     route_id SERIAL PRIMARY KEY,
+    company_id INT NOT NULL REFERENCES  corporate_wellness.company(company_id),
     name varchar(255),
     description varchar(255)
 );
@@ -35,7 +46,7 @@ CREATE TABLE IF NOT EXISTS corporate_wellness.routeperformance
 
 ---------------------------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS corporate_wellness.heartrateupdate
+CREATE TABLE IF NOT EXISTS corporate_wellness.heartratehistory
 (
     update_id SERIAL PRIMARY KEY,
     user_id INT NOT NULL references corporate_wellness.profile(user_id),
@@ -49,7 +60,7 @@ BEGIN
     -- Check if the specific column is updated
     IF NEW.heart_rate <> OLD.heart_rate THEN
         -- Insert a new row into the audit table
-        INSERT INTO corporate_wellness.heartrateupdate (user_id, heart_rate, timestamp_update)
+        INSERT INTO corporate_wellness.heartratehistory (user_id, heart_rate, timestamp_update)
         VALUES (NEW.user_id, NEW.heart_rate, now());
     END IF;
 	RETURN NEW;
@@ -64,7 +75,7 @@ EXECUTE FUNCTION update_heart_rate_function();
 
 ---------------------------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS corporate_wellness.weightupdate
+CREATE TABLE IF NOT EXISTS corporate_wellness.weighthistory
 (
     update_id SERIAL PRIMARY KEY,
     user_id INT NOT NULL references corporate_wellness.profile(user_id),
@@ -78,7 +89,7 @@ BEGIN
     -- Check if the specific column is updated
     IF NEW.weight <> OLD.weight THEN
         -- Insert a new row into the audit table
-        INSERT INTO corporate_wellness.weightupdate (user_id, weight, timestamp_update)
+        INSERT INTO corporate_wellness.weighthistory (user_id, weight, timestamp_update)
         VALUES (NEW.user_id, NEW.weight, now());
     END IF;
 	RETURN NEW;
@@ -106,21 +117,24 @@ CREATE TABLE IF NOT EXISTS corporate_wellness.profileauth
 
 CREATE TABLE corporate_wellness.questionnaire (
     questionnaire_id SERIAL PRIMARY KEY,
+    company_id INT NOT NULL REFERENCES corporate_wellness.company(company_id),
     title VARCHAR(255) NOT NULL,
     description varchar(255)
 );
 
 CREATE TABLE corporate_wellness.question (
     question_id SERIAL PRIMARY KEY,
-    questionnaire_id INTEGER REFERENCES corporate_wellness.questionnaire(questionnaire_id),
+    questionnaire_id INT NOT NULL REFERENCES corporate_wellness.questionnaire(questionnaire_id),
     question_text TEXT NOT NULL
 );
 
 CREATE TABLE corporate_wellness.answer (
     answer_id SERIAL PRIMARY KEY,
     user_id INT NOT NULL references corporate_wellness.profile(user_id),
-    questionnaire_id INTEGER REFERENCES corporate_wellness.questionnaire(questionnaire_id),
-    question_id INTEGER REFERENCES corporate_wellness.question(question_id),
+    questionnaire_id INT NOT NULL REFERENCES corporate_wellness.questionnaire(questionnaire_id),
+    question_id INT NOT NULL REFERENCES corporate_wellness.question(question_id),
     answer varchar(255),
     timestamp_answer TIMESTAMP WITH TIME ZONE
 );
+
+-----------------------------------------------------------------------

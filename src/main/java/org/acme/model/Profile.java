@@ -25,6 +25,10 @@ public class Profile {
     @JsonProperty("user_id")
     private Integer user_id;
 
+    @Column(name = "company_id")
+    @JsonProperty("company_id")
+    private Integer companyId;
+
     @Column(name = "name")
     @JsonProperty("name")
     private String name;
@@ -60,6 +64,7 @@ public class Profile {
     public Profile() {}
 
     public Profile(
+            @JsonProperty("company_id") Integer companyId,
             @JsonProperty("name") String name,
             @JsonProperty("surname") String surname,
             @JsonProperty("email") String email,
@@ -68,6 +73,7 @@ public class Profile {
             @JsonProperty("height") BigDecimal height,
             @JsonProperty("weight") BigDecimal weight,
             @JsonProperty("heart_rate") BigDecimal heart_rate) {
+        this.companyId = companyId;
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -97,6 +103,10 @@ public class Profile {
     // Getter methods
     public int getUser_id() {
         return user_id;
+    }
+
+    public int getCompanyId() {
+        return companyId;
     }
     public String getName() {
         return name;
@@ -134,6 +144,11 @@ public class Profile {
     public void setUser_id(int user_id) {
         this.user_id = user_id;
     }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
