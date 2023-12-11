@@ -115,6 +115,15 @@ CREATE TABLE IF NOT EXISTS corporate_wellness.profileauth
 
 ---------------------------------------------------------------------
 
+CREATE TABLE IF NOT EXISTS corporate_wellness.loginhistory
+(
+    login_id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL references corporate_wellness.profile(user_id),
+    timestamp_login TIMESTAMP WITH TIME ZONE
+);
+
+---------------------------------------------------------------------
+
 CREATE TABLE corporate_wellness.questionnaire (
     questionnaire_id SERIAL PRIMARY KEY,
     company_id INT NOT NULL REFERENCES corporate_wellness.company(company_id),
