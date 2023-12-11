@@ -147,3 +147,11 @@ CREATE TABLE corporate_wellness.answer (
 );
 
 -----------------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS corporate_wellness.apiuser
+(
+    api_user_id SERIAL PRIMARY KEY,
+    username varchar(255),
+    password varchar(255),
+    role varchar(255)
+);
