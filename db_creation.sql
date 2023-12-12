@@ -2,7 +2,8 @@ CREATE TABLE IF NOT EXISTS corporate_wellness.company
 (
     company_id SERIAL PRIMARY KEY,
     name varchar(255),
-    location varchar(255)
+    location varchar(255),
+    logo_link varchar(255)
 );
 
 ---------------------------------------------------------------------
@@ -155,3 +156,62 @@ CREATE TABLE IF NOT EXISTS corporate_wellness.apiuser
     password varchar(255),
     role varchar(255)
 );
+
+-----------------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS corporate_wellness.team
+(
+    team_id SERIAL PRIMARY KEY,
+    name varchar(255),
+    description varchar(255),
+    logo_link varchar(255)
+);
+
+-----------------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS corporate_wellness.project
+(
+    project_id SERIAL PRIMARY KEY,
+    name varchar(255),
+    description varchar(255),
+    objective INT,
+    logo_link varchar(255)
+);
+
+------------------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS corporate_wellness.companyproject
+(
+    companyproject_id SERIAL PRIMARY KEY,
+    company_id INT NOT NULL REFERENCES corporate_wellness.company(company_id),
+    project_id INT NOT NULL REFERENCES corporate_wellness.project(project_id)
+);
+
+------------------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS corporate_wellness.teamproject
+(
+    teamproject_id SERIAL PRIMARY KEY,
+    team_id INT NOT NULL REFERENCES corporate_wellness.team(team_id),
+    project_id INT NOT NULL REFERENCES corporate_wellness.project(project_id)
+);
+
+------------------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS corporate_wellness.teammember
+(
+    teammember_id SERIAL PRIMARY KEY,
+    team_id INT NOT NULL REFERENCES corporate_wellness.team(team_id),
+    user_id INT NOT NULL references corporate_wellness.profile(user_id)
+);
+
+------------------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS corporate_wellness.wallet
+(
+    wallet_id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL references corporate_wellness.profile(user_id),
+    balance INT
+);
+
+------------------------------------------------------------------------
