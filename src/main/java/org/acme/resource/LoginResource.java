@@ -12,6 +12,8 @@ import org.acme.model.LoginHistory;
 import org.acme.model.Profile;
 import org.acme.model.ProfileAuth;
 import org.jboss.logging.Logger;
+import io.quarkus.elytron.security.common.BcryptUtil;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -42,7 +44,8 @@ public class LoginResource {
         } catch (NoResultException nre) {
             return Response.ok("The selected user do not exist").status(400).build();
         }
-        if (Objects.equals(body.getHashedPassword(), auth.getHashedPassword())) {
+
+        if (BCrypt.checkpw(body.getHashedPassword(), auth.getHashedPassword())) {
             LoginHistory login = new LoginHistory(auth.getUserId(), Timestamp.valueOf(LocalDateTime.now()));
             try {
             entityManager.persist(login);

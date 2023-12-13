@@ -1,5 +1,6 @@
 package org.acme.resource;
 
+import io.quarkus.elytron.security.common.BcryptUtil;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -11,7 +12,11 @@ import jakarta.ws.rs.core.Response;
 import org.acme.model.Profile;
 import org.acme.model.ProfileAuth;
 import org.jboss.logging.Logger;
-// TO DO : Hash + Salt Password
+import java.security.SecureRandom;
+import org.mindrot.jbcrypt.BCrypt;
+
+
+// TO DO : Check that the user do not already exist
 @Path("/registration")
 @ApplicationScoped
 @Produces("application/json")
@@ -25,9 +30,11 @@ public class RegistrationResource {
     @Transactional
     public Response Register(ProfileAuth profileAuth) {
         // TO DO : Check that the email match the user
-        if (profileAuth.getEmail() == null  || profileAuth.getHashedPassword() == null || profileAuth.getSalt() == null) {
+        if (profileAuth.getEmail() == null  || profileAuth.getHashedPassword() == null) {
             throw new WebApplicationException("Missing obligatory parameters", 400);
         }
+        profileAuth.setHashedPassword(BCrypt.hashpw(profileAuth.getHashedPassword(), BCrypt.gensalt()));
+        LOG.info("Hash generated " + profileAuth.getHashedPassword());
         try {
             entityManager.persist(profileAuth);
             return Response.ok(profileAuth).status(201).build();
@@ -35,5 +42,4 @@ public class RegistrationResource {
             return Response.ok("The operation failed").status(500).build();
         }
     }
-
 }
