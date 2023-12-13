@@ -63,6 +63,7 @@ public class Profile {
     public Profile() {}
 
     public Profile(
+            @JsonProperty("user_id") Integer user_id,
             @JsonProperty("company_id") Integer companyId,
             @JsonProperty("name") String name,
             @JsonProperty("surname") String surname,
@@ -72,6 +73,7 @@ public class Profile {
             @JsonProperty("height") BigDecimal height,
             @JsonProperty("weight") BigDecimal weight,
             @JsonProperty("heart_rate") BigDecimal heart_rate) {
+        this.user_id = user_id;
         this.companyId = companyId;
         this.name = name;
         this.surname = surname;

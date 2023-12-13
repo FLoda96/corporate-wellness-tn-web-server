@@ -46,7 +46,7 @@ public class LoginResource {
             LoginHistory login = new LoginHistory(auth.getUserId(), Timestamp.valueOf(LocalDateTime.now()));
             try {
             entityManager.persist(login);
-            return Response.ok("Logged in").status(200).build();
+            return Response.ok("Logged in").status(201).build();
             } catch (PersistenceException pe) {
                 return Response.ok("The operation failed").status(500).build();
             }

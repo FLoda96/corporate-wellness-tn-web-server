@@ -3,6 +3,7 @@ package org.acme.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
+// TO DO : Change Hashed_Password to just password since technically it doesn't
 @Entity
 @Table(name = "profileauth")
 @NamedQuery(name = "ProfileAuth.findByEmail", query = "SELECT q FROM ProfileAuth q WHERE q.email = :email")

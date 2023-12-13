@@ -11,7 +11,7 @@ import jakarta.ws.rs.core.Response;
 import org.acme.model.Profile;
 import org.acme.model.ProfileAuth;
 import org.jboss.logging.Logger;
-
+// TO DO : Hash + Salt Password
 @Path("/registration")
 @ApplicationScoped
 @Produces("application/json")

@@ -108,8 +108,8 @@ EXECUTE FUNCTION update_weight_function();
 CREATE TABLE IF NOT EXISTS corporate_wellness.profileauth
 (
     auth_id SERIAL PRIMARY KEY,
-    user_id INT NOT NULL references corporate_wellness.profile(user_id),
-    email varchar(255) NOT NULL references corporate_wellness.profile(email),
+    user_id INT NOT NULL UNIQUE references corporate_wellness.profile(user_id),
+    email varchar(255) NOT NULL UNIQUE references corporate_wellness.profile(email),
     hashed_password varchar(255),
     salt varchar(255)
 );
