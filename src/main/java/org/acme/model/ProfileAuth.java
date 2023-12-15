@@ -3,7 +3,6 @@ package org.acme.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
-// TO DO : Change Hashed_Password to just password since technically it doesn't
 @Entity
 @Table(name = "profileauth")
 @NamedQuery(name = "ProfileAuth.findByEmail", query = "SELECT q FROM ProfileAuth q WHERE q.email = :email")
@@ -27,10 +26,6 @@ public class ProfileAuth {
     @JsonProperty("hashed_password")
     private String hashedPassword;
 
-    @Column(name = "salt", length = 255)
-    @JsonProperty("salt")
-    private String salt;
-
     // Constructors
 
     public ProfileAuth() {
@@ -41,7 +36,6 @@ public class ProfileAuth {
         this.userId = userId;
         this.email = email;
         this.hashedPassword = hashedPassword;
-        this.salt = salt;
     }
 
     // Getters and Setters
@@ -78,14 +72,6 @@ public class ProfileAuth {
         this.hashedPassword = hashedPassword;
     }
 
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
-    }
-
     // toString method
 
     @Override
@@ -95,7 +81,6 @@ public class ProfileAuth {
                 ", userId=" + userId +
                 ", email='" + email + '\'' +
                 ", hashedPassword='" + hashedPassword + '\'' +
-                ", salt='" + salt + '\'' +
                 '}';
     }
 }
