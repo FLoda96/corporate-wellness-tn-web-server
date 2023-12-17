@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.Date;
+import java.time.LocalDate;
 
 // TO DO : Define constants to build queries with
 // TO DO : Define more precise constraints for the fields and validate json fields before doing stuff
@@ -36,6 +38,10 @@ public class Profile {
     @JsonProperty("surname")
     private String surname;
 
+    @Column(name = "date_of_birth")
+    @JsonProperty("date_of_birth")
+    private LocalDate dateOfBirth;
+
     @Column(name = "email")
     @JsonProperty("email")
     private String email;
@@ -48,6 +54,9 @@ public class Profile {
     @JsonProperty("sex")
     private String sex;
 
+    @Column(name = "waistline")
+    @JsonProperty("waistline")
+    private BigDecimal waistline;
     @Column(name = "height")
     @JsonProperty("height")
     private BigDecimal height;
@@ -67,9 +76,11 @@ public class Profile {
             @JsonProperty("company_id") Integer companyId,
             @JsonProperty("name") String name,
             @JsonProperty("surname") String surname,
+            @JsonProperty("date_of_birth") LocalDate dateOfBirth,
             @JsonProperty("email") String email,
             @JsonProperty("nickname") String nickname,
             @JsonProperty("sex") String sex,
+            @JsonProperty("waistline") BigDecimal waistline,
             @JsonProperty("height") BigDecimal height,
             @JsonProperty("weight") BigDecimal weight,
             @JsonProperty("heart_rate") BigDecimal heart_rate) {
@@ -77,9 +88,11 @@ public class Profile {
         this.companyId = companyId;
         this.name = name;
         this.surname = surname;
+        this.dateOfBirth = dateOfBirth;
         this.email = email;
         this.nickname = nickname;
         this.sex = sex;
+        this.waistline = waistline;
         this.height = height;
         this.weight = weight;
         this.heart_rate = heart_rate;
@@ -92,9 +105,11 @@ public class Profile {
         return "Profile{" +
                 "name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
+                ", date of birth='" + dateOfBirth + '\'' +
                 ", email='" + email + '\'' +
                 ", nickname='" + nickname + '\'' +
                 ", sex='" + sex + '\'' +
+                ", waistline='" + waistline + '\'' +
                 ", height='" + height + '\'' +
                 ", weight='" + weight + '\'' +
                 ", heart_rate='" + heart_rate + '\'' +
@@ -117,6 +132,8 @@ public class Profile {
         return surname;
     }
 
+    public LocalDate getDateOfBirth() {return dateOfBirth;}
+
     public String getEmail() {
         return email;
     }
@@ -128,6 +145,8 @@ public class Profile {
     public String getSex() {
         return sex;
     }
+
+    public BigDecimal getWaistline() {return waistline;}
 
     public BigDecimal getHeight() {
         return height;
@@ -158,6 +177,8 @@ public class Profile {
         this.surname = surname;
     }
 
+    public void setDateOfBirth(LocalDate dateOfBirth) {this.dateOfBirth = dateOfBirth;}
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -169,6 +190,8 @@ public class Profile {
     public void setSex(String sex) {
         this.sex = sex;
     }
+
+    public void setWaistline(BigDecimal waistline) {this.waistline = waistline;}
 
     public void setHeight(BigDecimal height) {
         this.height = height;
@@ -183,8 +206,10 @@ public class Profile {
         profile1.setName(profile2.getName());
         profile1.setSurname(profile2.getSurname());
         profile1.setEmail(profile2.getEmail());
+        profile1.setDateOfBirth(profile2.getDateOfBirth());
         profile1.setNickname(profile2.getNickname());
         profile1.setSex(profile2.getSex());
+        profile1.setWaistline(profile2.getWaistline());
         profile1.setHeight(profile2.getHeight());
         profile1.setWeight(profile2.getWeight());
         profile1.setHeart_rate(profile2.getHeart_rate());

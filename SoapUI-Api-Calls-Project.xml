@@ -17,7 +17,8 @@
 }</con:request><con:originalUri>http://localhost/profile</con:originalUri><con:credentials><con:username>test</con:username><con:password>test</con:password><con:selectedAuthProfile>Basic</con:selectedAuthProfile><con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method><con:method name="PUT" id="77373aa1-4ddb-4d75-a00d-876cc8ecd612" method="PUT"><con:settings/><con:parameters/><con:representation type="REQUEST"><con:mediaType>application/json</con:mediaType><con:params/></con:representation><con:representation type="FAULT"><con:mediaType>application/json; charset=utf-8</con:mediaType><con:status>500</con:status><con:params/><con:element xmlns:prof="http://localhost/profile">prof:Fault</con:element></con:representation><con:representation type="FAULT"><con:mediaType>application/json;charset=UTF-8</con:mediaType><con:status>400</con:status><con:params/></con:representation><con:representation type="RESPONSE"><con:mediaType>application/json;charset=UTF-8</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:prof="http://localhost/profile">prof:Response</con:element></con:representation><con:request name="Request 1" id="75bfae69-853e-4059-a614-0b42f4cfd7c3" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>http://localhost:8090</con:endpoint><con:request>{
       "name": "Jonnyy",
       "surname": "Test",
-      "email": "test@abc.com",
+      "date_of_birth": "1990-1-01",
+      "email": "john.doe@example.com",
       "nickname": "test-name",
       "sex": "Male",
       "height": 175.5,

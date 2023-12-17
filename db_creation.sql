@@ -14,9 +14,11 @@ CREATE TABLE IF NOT EXISTS corporate_wellness.profile
     company_id INT NOT NULL REFERENCES corporate_wellness.company(company_id),
     name varchar(255),
     surname varchar(255),
+    date_of_birth date,
     email varchar(255) NOT NULL UNIQUE,
     nickname varchar(255),
     sex varchar(255),
+    waistline numeric(6,2),
     height numeric(6,2),
     weight numeric(6,2),
     heart_rate numeric(6,2)
