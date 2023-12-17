@@ -66,7 +66,7 @@ public class ProfileResource {
             return Response.ok("The operation failed").status(500).build();
         }
     }
-
+    // TO DO : Implement an actual way to change email
     @PUT
     @Transactional
     public Response Update(Profile user) {
