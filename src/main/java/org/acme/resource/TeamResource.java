@@ -18,7 +18,6 @@ import java.util.List;
 @ApplicationScoped
 @Produces("application/json")
 @Consumes("application/json")
-@RolesAllowed("admin")
 public class TeamResource {
 
     @Inject
@@ -68,6 +67,7 @@ public class TeamResource {
 
     @DELETE
     @Path("/{team_id}")
+    @RolesAllowed("admin")
     @Transactional
     public Response deleteTeam(@PathParam("team_id") Integer teamId) {
         Team team = entityManager.find(Team.class, teamId);

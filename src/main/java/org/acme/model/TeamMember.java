@@ -6,6 +6,9 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "teammember")
 @NamedQuery(name = "TeamMember.findAll", query = "SELECT tm FROM TeamMember tm")
+@NamedQuery(name = "TeamMember.findByTeamId", query = "SELECT tm FROM TeamMember tm where tm.teamId = :teamId")
+@NamedQuery(name = "TeamMember.findByUserId", query = "SELECT tm FROM TeamMember tm where tm.userId = :userId")
+@NamedQuery(name = "TeamMember.findByUserIdAndTeam", query = "SELECT tm FROM TeamMember tm where tm.userId = :userId and tm.teamId = :teamId")
 public class TeamMember {
 
     @Id
