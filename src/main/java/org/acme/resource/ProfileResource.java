@@ -16,7 +16,8 @@ import org.acme.model.Profile;
 import org.jboss.logging.Logger;
 
 import io.quarkus.mailer.Mail;
-import io.quarkus.mailer.reactive.ReactiveMailer;
+import io.quarkus.mailer.Mailer;
+//import io.quarkus.mailer.reactive.ReactiveMailer;
 
 @Path("/profile")
 @RolesAllowed("user")
@@ -27,7 +28,7 @@ public class ProfileResource {
     @Inject
     EntityManager entityManager;
     @Inject
-    ReactiveMailer reactiveMailer;
+    Mailer mailer;
     private static final Logger LOG = Logger.getLogger(ProfileResource.class);
     @GET
     @Path("/all")
@@ -66,12 +67,13 @@ public class ProfileResource {
             throw new WebApplicationException("Invalid user.", 422);
         }
         // TO DO : Come up with an actual email text and other stuff
-        reactiveMailer.send(
+        mailer.send(
                 Mail.withText(user.getEmail(),
                         "Welcome to MoveApp",
                         "Welcome to MoveApp, the app that makes you move"
                 )
         );
+
         try {
             entityManager.persist(user);
             return Response.ok(user).status(201).build();
