@@ -23,15 +23,20 @@ public class Question {
     @JsonProperty("question_text")
     private String questionText;
 
+    @Column(name = "question_type")
+    @JsonProperty("question_type")
+    private String questionType;
+
     // Constructors
 
     public Question() {
         // Default constructor
     }
 
-    public Question(Integer questionnaireId, String questionText) {
+    public Question(Integer questionnaireId, String questionText, String questionType) {
         this.questionnaireId = questionnaireId;
         this.questionText = questionText;
+        this.questionType = questionType;
     }
 
     // Getters and Setters
@@ -58,6 +63,14 @@ public class Question {
 
     public void setQuestionText(String questionText) {
         this.questionText = questionText;
+    }
+
+    public String getQuestionType() {
+        return questionType;
+    }
+
+    public void setQuestionType(String questionType) {
+        this.questionType = questionType;
     }
 
 

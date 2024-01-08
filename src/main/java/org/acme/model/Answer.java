@@ -30,6 +30,10 @@ public class Answer {
     @JsonProperty("question_id")
     private Integer questionId;
 
+    @Column(name = "answer_numeric")
+    @JsonProperty("answer_numeric")
+    private Integer answerNumeric;
+
     @Column(name = "answer", length = 255)
     @JsonProperty("answer")
     private String answer;
@@ -44,10 +48,11 @@ public class Answer {
         // Default constructor
     }
 
-    public Answer(Integer answerId, Integer questionnaireId, Integer questionId, String answer, Timestamp timestampAnswer) {
+    public Answer(Integer answerId, Integer questionnaireId, Integer questionId, Integer answerNumeric, String answer, Timestamp timestampAnswer) {
         this.answerId = answerId;
         this.questionnaireId = questionnaireId;
         this.questionId = questionId;
+        this.answerNumeric = answerNumeric;
         this.answer = answer;
         this.timestampAnswer = timestampAnswer;
     }
@@ -84,6 +89,14 @@ public class Answer {
 
     public void setQuestionId(Integer questionId) {
         this.questionId = questionId;
+    }
+
+    public Integer getAnswerNumeric() {
+        return answerNumeric;
+    }
+
+    public void setAnswerNumeric(Integer answerNumeric) {
+        this.answerNumeric = answerNumeric;
     }
 
     public String getAnswer() {
