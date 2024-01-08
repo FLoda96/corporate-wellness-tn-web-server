@@ -216,3 +216,11 @@ CREATE TABLE IF NOT EXISTS corporate_wellness.wallet
 );
 
 ------------------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS corporate_wellness.forgotpassword
+(
+    forgotpassword_id SERIAL PRIMARY KEY,
+    timestamp_request TIMESTAMP WITH TIME ZONE,
+    email varchar(255) NOT NULL references corporate_wellness.profile(email),
+    unique_code varchar(255)
+);

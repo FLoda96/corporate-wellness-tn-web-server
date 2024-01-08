@@ -42,4 +42,30 @@ public class RegistrationResource {
             return Response.ok("The operation failed").status(500).build();
         }
     }
+
+    @PUT
+    @Transactional
+    public Response UpdatePassword(ProfileAuth profileAuth) {
+        LOG.info(profileAuth.toString());
+        // TO DO : Check that the email match the user
+        if (profileAuth.getEmail() == null  || profileAuth.getHashedPassword() == null) {
+            throw new WebApplicationException("Missing obligatory parameters", 400);
+        }
+        ProfileAuth dbAuth = null;
+        try {
+            dbAuth = entityManager.createNamedQuery("ProfileAuth.findByEmail", ProfileAuth.class)
+                    .setParameter("email", profileAuth.getEmail())
+                    .getSingleResult();
+        } catch (NoResultException nre) {
+            return Response.ok("The selected user do not exist").status(400).build();
+        }
+        dbAuth.setHashedPassword(BCrypt.hashpw(profileAuth.getHashedPassword(), BCrypt.gensalt()));
+        LOG.info("Hash generated " + profileAuth.getHashedPassword());
+        try {
+            entityManager.merge(dbAuth);
+            return Response.ok(profileAuth).status(200).build();
+        } catch (PersistenceException pe) {
+            return Response.ok("The operation failed").status(500).build();
+        }
+    }
 }
