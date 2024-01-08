@@ -19,6 +19,10 @@ public class Question {
     @JsonProperty("questionnaire_id")
     private Integer questionnaireId;
 
+    @Column(name = "question_order")
+    @JsonProperty("question_order")
+    private Integer questionOrder;
+
     @Column(name = "question_text")
     @JsonProperty("question_text")
     private String questionText;
@@ -55,6 +59,14 @@ public class Question {
 
     public void setQuestionnaireId(Integer questionnaireId) {
         this.questionnaireId = questionnaireId;
+    }
+
+    public Integer getQuestionOrder() {
+        return questionOrder;
+    }
+
+    public void setQuestionOrder(Integer questionOrder) {
+        this.questionOrder = questionOrder;
     }
 
     public String getQuestionText() {

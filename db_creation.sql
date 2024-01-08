@@ -137,6 +137,7 @@ CREATE TABLE corporate_wellness.question (
     question_id SERIAL PRIMARY KEY,
     questionnaire_id INT NOT NULL REFERENCES corporate_wellness.questionnaire(questionnaire_id),
     question_text VARCHAR(255) NOT NULL,
+    question_order INT,
     question_type VARCHAR(255) NOT NULL
 );
 
