@@ -19,28 +19,15 @@ public class Question {
     @JsonProperty("questionnaire_id")
     private Integer questionnaireId;
 
-    @Column(name = "question_order")
-    @JsonProperty("question_order")
-    private Integer questionOrder;
-
-    @Column(name = "question_text")
-    @JsonProperty("question_text")
-    private String questionText;
-
-    @Column(name = "question_type")
-    @JsonProperty("question_type")
-    private String questionType;
-
     // Constructors
 
     public Question() {
         // Default constructor
     }
 
-    public Question(Integer questionnaireId, String questionText, String questionType) {
+    public Question(Integer questionId, Integer questionnaireId) {
+        this.questionId = questionId;
         this.questionnaireId = questionnaireId;
-        this.questionText = questionText;
-        this.questionType = questionType;
     }
 
     // Getters and Setters
@@ -61,37 +48,12 @@ public class Question {
         this.questionnaireId = questionnaireId;
     }
 
-    public Integer getQuestionOrder() {
-        return questionOrder;
-    }
-
-    public void setQuestionOrder(Integer questionOrder) {
-        this.questionOrder = questionOrder;
-    }
-
-    public String getQuestionText() {
-        return questionText;
-    }
-
-    public void setQuestionText(String questionText) {
-        this.questionText = questionText;
-    }
-
-    public String getQuestionType() {
-        return questionType;
-    }
-
-    public void setQuestionType(String questionType) {
-        this.questionType = questionType;
-    }
-
 
     @Override
     public String toString() {
         return "Question{" +
                 "questionId=" + questionId +
                 ", questionnaireId=" + questionnaireId +
-                ", questionText='" + questionText + '\'' +
                 '}';
     }
 }

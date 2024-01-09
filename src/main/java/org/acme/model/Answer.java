@@ -30,11 +30,19 @@ public class Answer {
     @JsonProperty("question_id")
     private Integer questionId;
 
+    @Column(name = "answer_type")
+    @JsonProperty("answer_type")
+    private String answerType;
+
+    @Column(name = "language_code")
+    @JsonProperty("language_code")
+    private String languageCode;
+
     @Column(name = "answer_numeric")
     @JsonProperty("answer_numeric")
     private Integer answerNumeric;
 
-    @Column(name = "answer", length = 255)
+    @Column(name = "answer")
     @JsonProperty("answer")
     private String answer;
 
@@ -48,10 +56,12 @@ public class Answer {
         // Default constructor
     }
 
-    public Answer(Integer answerId, Integer questionnaireId, Integer questionId, Integer answerNumeric, String answer, Timestamp timestampAnswer) {
+    public Answer(Integer answerId, Integer questionnaireId, Integer questionId, Integer answerNumeric, String answerType, String languageCode, String answer, Timestamp timestampAnswer) {
         this.answerId = answerId;
         this.questionnaireId = questionnaireId;
         this.questionId = questionId;
+        this.answerType = answerType;
+        this.languageCode = languageCode;
         this.answerNumeric = answerNumeric;
         this.answer = answer;
         this.timestampAnswer = timestampAnswer;
@@ -91,6 +101,22 @@ public class Answer {
         this.questionId = questionId;
     }
 
+    public String getAnswerType() {
+        return answerType;
+    }
+
+    public void setAnswerType(String answerType) {
+        this.answerType = answerType;
+    }
+
+    public String getLanguageCode() {
+        return languageCode;
+    }
+
+    public void setLanguageCode(String languageCode) {
+        this.languageCode = languageCode;
+    }
+
     public Integer getAnswerNumeric() {
         return answerNumeric;
     }
@@ -124,6 +150,8 @@ public class Answer {
                 ", userId=" + userId +
                 ", questionnaireId=" + questionnaireId +
                 ", questionId=" + questionId +
+                ", answerType='" + answerType + '\'' +
+                ", languageCode='" + languageCode + '\'' +
                 ", answer='" + answer + '\'' +
                 ", timestampAnswer=" + timestampAnswer +
                 '}';

@@ -52,28 +52,4 @@ public class QuestionnaireResource {
             return Response.ok("The operation failed").status(500).build();
         }
     }
-
-    @PUT
-    @Transactional
-    public Response updateQuestionnaire(Questionnaire questionnaire) {
-        try {
-            entityManager.merge(questionnaire);
-            return Response.ok(questionnaire).status(200).build();
-        } catch (PersistenceException pe) {
-            return Response.ok("The operation failed").status(500).build();
-        }
-    }
-
-    @DELETE
-    @Path("/{questionnaire_id}")
-    @Transactional
-    public Response deleteQuestionnaire(@PathParam("questionnaire_id") Integer questionnaireId) {
-        Questionnaire questionnaire = entityManager.find(Questionnaire.class, questionnaireId);
-        if (questionnaire != null) {
-            entityManager.remove(questionnaire);
-            return Response.ok().status(204).build();
-        } else {
-            return Response.ok("Questionnaire not found").status(404).build();
-        }
-    }
 }

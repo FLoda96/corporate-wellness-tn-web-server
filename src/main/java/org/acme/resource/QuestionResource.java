@@ -39,7 +39,7 @@ public class QuestionResource {
     @POST
     @Transactional
     public Response RegisterPerformance(Question question) {
-        if ((question.getQuestionnaireId() == null) && (question.getQuestionText() == null)) {
+        if ((question.getQuestionnaireId() == null)) {
             throw new WebApplicationException("Missing obligatory parameters", 400);
         }
         try {

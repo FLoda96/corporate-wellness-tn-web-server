@@ -44,6 +44,7 @@ public class ForgotPasswordResource {
     }*/
 
     // Should be a GET but then it doesn't permit me to insert a body
+    // Does not really scale well, maybe combined with autodeletion of records older than a week every week or something
     @PUT
     @Path("/checkvalidity")
     public Response checkValidity(ForgotPassword forgotPassword) {
@@ -71,7 +72,7 @@ public class ForgotPasswordResource {
 
     public Void sendEmailForgotPassword(String EmailAddress, String Code) {
         String resetLink = "http://www.moveappapp.com/password?email=" + EmailAddress + "%26" + Code ;
-        String emailBody = "To reset your password open the app through this link <a href='" + resetLink + "'>here</a>.";
+        String emailBody = "To reset your password open the app through this link : " + resetLink + " .";
         String EmailSubject = "Reset Password";
         mailer.send(Mail.withText(EmailAddress, EmailSubject, emailBody));
         return null;

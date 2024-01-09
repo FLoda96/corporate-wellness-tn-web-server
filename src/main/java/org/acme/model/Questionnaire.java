@@ -21,25 +21,15 @@ public class Questionnaire {
     @JsonProperty("company_id")
     private Integer companyId;
 
-    @Column(name = "title", nullable = false)
-    @JsonProperty("title")
-    private String title;
-
-    @Column(name = "description")
-    @JsonProperty("description")
-    private String description;
-
     // Constructors
 
     public Questionnaire() {
         // Default constructor
     }
 
-    public Questionnaire(Integer questionnaireId, Integer companyId, String title, String description) {
+    public Questionnaire(Integer questionnaireId, Integer companyId) {
         this.questionnaireId = questionnaireId;
         this.companyId = companyId;
-        this.title = title;
-        this.description = description;
     }
 
     // Getters and Setters
@@ -60,21 +50,6 @@ public class Questionnaire {
         this.companyId = companyId;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     // toString method
 
@@ -83,8 +58,6 @@ public class Questionnaire {
         return "Questionnaire{" +
                 "questionnaireId=" + questionnaireId +
                 ", companyId=" + companyId +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
                 '}';
     }
 }

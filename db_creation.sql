@@ -128,17 +128,31 @@ CREATE TABLE IF NOT EXISTS corporate_wellness.loginhistory
 
 CREATE TABLE corporate_wellness.questionnaire (
     questionnaire_id SERIAL PRIMARY KEY,
-    company_id INT NOT NULL REFERENCES corporate_wellness.company(company_id),
+    company_id INT NOT NULL REFERENCES corporate_wellness.company(company_id)
+);
+
+CREATE TABLE corporate_wellness.questionnaire_data (
+	questionnaire_data_id SERIAL PRIMARY KEY,
+    questionnaire_id INT NOT NULL REFERENCES corporate_wellness.questionnaire(questionnaire_id),
+	language_code VARCHAR(10) NOT NULL,
     title VARCHAR(255) NOT NULL,
-    description varchar(1000)
+    description varchar(1000),
+	UNIQUE(questionnaire_id, language_code)
 );
 
 CREATE TABLE corporate_wellness.question (
     question_id SERIAL PRIMARY KEY,
-    questionnaire_id INT NOT NULL REFERENCES corporate_wellness.questionnaire(questionnaire_id),
+    questionnaire_id INT NOT NULL REFERENCES corporate_wellness.questionnaire(questionnaire_id)
+);
+
+CREATE TABLE corporate_wellness.question_data (
+	question_data_id SERIAL PRIMARY KEY,
+    question_id INT NOT NULL REFERENCES corporate_wellness.question(question_id),
+	language_code VARCHAR(10) NOT NULL,
     question_text VARCHAR(255) NOT NULL,
-    question_order INT,
-    question_type VARCHAR(255) NOT NULL
+    question_type VARCHAR(16) NOT NULL,
+	question_order INT NOT NULL,
+	UNIQUE(question_id, language_code)
 );
 
 CREATE TABLE corporate_wellness.answer (
@@ -146,6 +160,8 @@ CREATE TABLE corporate_wellness.answer (
     user_id INT NOT NULL references corporate_wellness.profile(user_id),
     questionnaire_id INT NOT NULL REFERENCES corporate_wellness.questionnaire(questionnaire_id),
     question_id INT NOT NULL REFERENCES corporate_wellness.question(question_id),
+	answer_type VARCHAR(16) NOT NULL,
+	language_code VARCHAR(10) NOT NULL,
     answer_numeric INT,
     answer varchar(255),
     timestamp_answer TIMESTAMP WITH TIME ZONE
