@@ -151,6 +151,7 @@ CREATE TABLE corporate_wellness.question_data (
 	language_code VARCHAR(10) NOT NULL,
     question_text VARCHAR(255) NOT NULL,
     question_type VARCHAR(16) NOT NULL,
+	obligatory BOOLEAN NOT NULL,
 	question_order INT NOT NULL,
 	UNIQUE(question_id, language_code)
 );

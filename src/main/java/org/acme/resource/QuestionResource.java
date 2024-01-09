@@ -31,7 +31,7 @@ public class QuestionResource {
 
     @GET
     @Path("/{questionnaire_id}")
-    public List<Question> GetQuestionByQuestionnaire(String questionnaire_id) {
+    public List<Question> GetQuestionsByQuestionnaire(String questionnaire_id) {
         return entityManager.createNamedQuery("Question.findByQuestionnaire", Question.class)
                 .setParameter("questionnaireId", questionnaire_id).getResultList();
     }

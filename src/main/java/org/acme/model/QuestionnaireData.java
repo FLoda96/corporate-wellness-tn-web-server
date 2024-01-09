@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "questionnaire_data")
 @NamedQuery(name = "QuestionnaireData.findAll", query = "SELECT qd FROM QuestionnaireData qd")
+@NamedQuery(name = "QuestionnaireData.getByIdAndLanguage", query = "SELECT qd FROM QuestionnaireData qd where qd.questionnaireId = :questionnaireId and qd.languageCode = :languageCode")
 public class QuestionnaireData {
 
     @Id

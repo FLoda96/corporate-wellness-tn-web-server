@@ -8,9 +8,13 @@ import jakarta.persistence.NoResultException;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
+import org.acme.model.Question;
+import org.acme.model.QuestionData;
 import org.acme.model.Questionnaire;
+import org.acme.model.QuestionnaireData;
 import org.jboss.logging.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Path("/questionnaire")
@@ -42,14 +46,45 @@ public class QuestionnaireResource {
         }
     }
 
-    @POST
-    @Transactional
-    public Response createQuestionnaire(Questionnaire questionnaire) {
+    @GET
+    @Path("/{questionnaire_id}/{language_code}")
+    public QuestionnaireData getQuestionnaireData(Integer questionnaire_id, String language_code) {
         try {
-            entityManager.persist(questionnaire);
-            return Response.ok(questionnaire).status(201).build();
-        } catch (PersistenceException pe) {
-            return Response.ok("The operation failed").status(500).build();
+            return entityManager.createNamedQuery("QuestionnaireData.getByIdAndLanguage", QuestionnaireData.class)
+                    .setParameter("questionnaireId", questionnaire_id)
+                    .setParameter("languageCode", language_code)
+                    .getSingleResult();
+        } catch (NoResultException nre) {
+            return null;
         }
+    }
+
+    // 200 means ok, 204 means that at some point there was a question with no reference
+    @GET
+    @Path("questionlist/{questionnaire_id}/{language_code}")
+    public List<QuestionData> getQuestionList(Integer questionnaire_id, String language_code) {
+        List<Question> questions = null;
+        try {
+            questions = entityManager.createNamedQuery("Question.findByQuestionnaire", Question.class)
+                    .setParameter("questionnaireId", questionnaire_id).getResultList();
+        } catch (NoResultException nre) {
+            return null;
+        }
+        LOG.info(questions.toString());
+        List<QuestionData> questionDataList = new ArrayList<QuestionData>();
+        for (Question question : questions) {
+            try {
+                QuestionData questiondata = entityManager.createNamedQuery("QuestionData.getByQuestionAndLanguage", QuestionData.class)
+                        .setParameter("questionId", question.getQuestionId())
+                        .setParameter("languageCode", language_code)
+                        .getSingleResult();
+                if (questiondata != null) {
+                    questionDataList.add(questiondata);
+                }
+            } catch (NoResultException nre) {
+                return null;
+            }
+        }
+        return questionDataList;
     }
 }

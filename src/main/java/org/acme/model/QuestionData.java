@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "question_data")
 @NamedQuery(name = "QuestionData.findAll", query = "SELECT qd FROM QuestionData qd")
+@NamedQuery(name = "QuestionData.getByQuestionAndLanguage", query = "SELECT qd FROM QuestionData qd where qd.questionId = :questionId and qd.languageCode = :languageCode")
+
 public class QuestionData {
 
     @Id
@@ -29,6 +31,10 @@ public class QuestionData {
     @JsonProperty("question_type")
     private String questionType;
 
+    @Column(name = "obligatory", nullable = false)
+    @JsonProperty("obligatory")
+    private Boolean obligatory;
+
     @Column(name = "question_order", nullable = false)
     @JsonProperty("question_order")
     private Integer questionOrder;
@@ -39,12 +45,13 @@ public class QuestionData {
         // Default constructor
     }
 
-    public QuestionData(Integer questionDataId, Integer questionId, String languageCode, String questionText, String questionType, Integer questionOrder) {
+    public QuestionData(Integer questionDataId, Integer questionId, String languageCode, String questionText, String questionType, Boolean obligatory, Integer questionOrder) {
         this.questionDataId = questionDataId;
         this.questionId = questionId;
         this.languageCode = languageCode;
         this.questionText = questionText;
         this.questionType = questionType;
+        this.obligatory = obligatory;
         this.questionOrder = questionOrder;
     }
 
@@ -88,6 +95,14 @@ public class QuestionData {
 
     public void setQuestionType(String questionType) {
         this.questionType = questionType;
+    }
+
+    public Boolean getObligatory() {
+        return obligatory;
+    }
+
+    public void setObligatory(Boolean obligatory) {
+        this.obligatory = obligatory;
     }
 
     public Integer getQuestionOrder() {
