@@ -17,6 +17,7 @@ public class QuestionData {
     private Integer questionDataId;
 
     @Column(name = "question_id", nullable = false)
+    @JsonProperty("question_id")
     private Integer questionId;
 
     @Column(name = "language_code", nullable = false)
