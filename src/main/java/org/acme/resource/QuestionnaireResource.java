@@ -70,7 +70,7 @@ public class QuestionnaireResource {
         } catch (NoResultException nre) {
             return null;
         }
-        LOG.info(questions.toString());
+        //LOG.info(questions.toString());
         List<QuestionData> questionDataList = new ArrayList<QuestionData>();
         for (Question question : questions) {
             try {
@@ -85,6 +85,7 @@ public class QuestionnaireResource {
                 return null;
             }
         }
+        //LOG.info(questionDataList.toString());
         return questionDataList;
     }
 }

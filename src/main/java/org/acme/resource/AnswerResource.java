@@ -22,7 +22,7 @@ public class AnswerResource {
     EntityManager entityManager;
     private static final Logger LOG = Logger.getLogger(AnswerResource.class);
 
-    @GET
+    /*@GET
     @Path("/all")
     public List<Answer> GetAllAnswers() {
         return entityManager.createNamedQuery("Answer.findAll", Answer.class)
@@ -48,7 +48,7 @@ public class AnswerResource {
     public List<Answer> GetAnswerByQuestion(String question_id) {
         return entityManager.createNamedQuery("Answer.findByQuestion", Answer.class)
                 .setParameter("questionId", question_id).getResultList();
-    }
+    }*/
 
     @POST
     @Transactional
@@ -64,5 +64,24 @@ public class AnswerResource {
         } catch (PersistenceException pe) {
             return Response.ok("The operation failed").status(500).build();
         }
+    }
+
+    @POST
+    @Transactional
+    @Path("/list")
+    public Response SubmitAnswerList(Answer[] answerList) {
+        for (Answer answer : answerList) {
+            if (answer.getQuestionnaireId() == null
+                    || answer.getQuestionId() == null || answer.getAnswer() == null
+                    || answer.getTimestampAnswer() == null) {
+                throw new WebApplicationException("Missing obligatory parameters", 400);
+            }
+            try {
+                entityManager.persist(answer);
+            } catch (PersistenceException pe) {
+                return Response.ok("The operation failed").status(500).build();
+            }
+        }
+        return Response.ok("List of answer inserted").status(201).build();
     }
 }
