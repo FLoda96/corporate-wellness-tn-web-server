@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "questionnaire")
 @NamedQuery(name = "Questionnaire.findAll", query = "SELECT q FROM Questionnaire q")
+@NamedQuery(name = "Questionnaire.findByCompany", query = "SELECT q FROM Questionnaire q where q.companyId = :companyId")
 @NamedQuery(name = "Questionnaire.findById", query = "SELECT q FROM Questionnaire q WHERE q.questionnaireId = :questionnaireId")
 @RolesAllowed("admin")
 public class Questionnaire {

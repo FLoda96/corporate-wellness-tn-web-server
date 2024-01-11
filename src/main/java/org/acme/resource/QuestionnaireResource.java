@@ -16,6 +16,7 @@ import org.jboss.logging.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Path("/questionnaire")
 @ApplicationScoped
@@ -44,6 +45,26 @@ public class QuestionnaireResource {
         } catch (NoResultException nre) {
             return null;
         }
+    }
+
+    @GET
+    @Path("/company/{company_id}/{language_code}")
+    public List<QuestionnaireData> getQuestionnaireDataByCompanyAndLanguage(Integer company_id, String language_code) {
+        List<Questionnaire> questionnaires = null;
+        questionnaires =  entityManager.createNamedQuery("Questionnaire.findByCompany", Questionnaire.class)
+                    .setParameter("companyId", company_id).getResultList();
+        List<QuestionnaireData> questionnaireDataList = null;
+        questionnaireDataList = entityManager.createNamedQuery("QuestionnaireData.findAll", QuestionnaireData.class)
+                .getResultList();
+        List<QuestionnaireData> finalResults = new ArrayList<>();
+        for (Questionnaire questionnaire : questionnaires) {
+            for (QuestionnaireData questionnaireData : questionnaireDataList) {
+                if (Objects.equals(questionnaire.getQuestionnaireId(), questionnaireData.getQuestionnaireId()) && (Objects.equals(questionnaireData.getLanguageCode(), language_code))) {
+                    finalResults.add(questionnaireData);
+                }
+            }
+        }
+        return finalResults;
     }
 
     @GET
