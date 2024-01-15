@@ -2,6 +2,7 @@ package org.acme.resource;
 
 import java.util.List;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -14,6 +15,7 @@ import org.acme.model.Question;
 import org.jboss.logging.Logger;
 
 @Path("/question")
+@RolesAllowed("user")
 @ApplicationScoped
 @Produces("application/json")
 @Consumes("application/json")

@@ -1,5 +1,6 @@
 package org.acme.resource;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -13,6 +14,7 @@ import org.jboss.logging.Logger;
 import java.util.List;
 
 @Path("/route")
+@RolesAllowed("user")
 @ApplicationScoped
 @Produces("application/json")
 @Consumes("application/json")

@@ -5,6 +5,7 @@ import io.quarkus.mailer.Mailer;
 //import io.quarkus.mailer.reactive.ReactiveMailer;
 import io.smallrye.common.annotation.Blocking;
 //import io.smallrye.mutiny.Uni;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -24,6 +25,7 @@ import java.util.List;
 import static org.acme.service.RandomStringGenerator.generateRandomString;
 
 @Path("/forgotpassword")
+@RolesAllowed("user")
 @ApplicationScoped
 @Produces("application/json")
 @Consumes("application/json")

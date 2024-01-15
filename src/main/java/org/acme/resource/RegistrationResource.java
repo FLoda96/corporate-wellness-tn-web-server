@@ -1,6 +1,7 @@
 package org.acme.resource;
 
 import io.quarkus.elytron.security.common.BcryptUtil;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -18,6 +19,7 @@ import org.mindrot.jbcrypt.BCrypt;
 
 // TO DO : Check that the user do not already exist
 @Path("/registration")
+@RolesAllowed("user")
 @ApplicationScoped
 @Produces("application/json")
 @Consumes("application/json")

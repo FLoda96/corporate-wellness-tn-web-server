@@ -15,6 +15,7 @@ import org.jboss.logging.Logger;
 import java.util.List;
 
 @Path("/team")
+@RolesAllowed("user")
 @ApplicationScoped
 @Produces("application/json")
 @Consumes("application/json")

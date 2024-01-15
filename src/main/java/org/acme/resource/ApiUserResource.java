@@ -14,6 +14,7 @@ import org.acme.model.ApiUser;
 import org.jboss.logging.Logger;
 
 @Path("/apiuser")
+@RolesAllowed("admin")
 @ApplicationScoped
 @Produces("application/json")
 @Consumes("application/json")
