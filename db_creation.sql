@@ -1,3 +1,5 @@
+CREATE SCHEMA IF NOT EXISTS corporate_wellness
+
 CREATE TABLE IF NOT EXISTS corporate_wellness.company
 (
     company_id SERIAL PRIMARY KEY,
