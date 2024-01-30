@@ -110,6 +110,35 @@ EXECUTE FUNCTION update_weight_function();
 
 ---------------------------------------------------------------------
 
+CREATE TABLE IF NOT EXISTS corporate_wellness.steplengthistory
+(
+    update_id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL references corporate_wellness.profile(user_id),
+    step_length numeric(6,2),
+    timestamp_update TIMESTAMP WITH TIME ZONE
+);
+
+CREATE OR REPLACE FUNCTION update_steplength_function()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- Check if the specific column is updated
+    IF NEW.weight <> OLD.weight THEN
+        -- Insert a new row into the audit table
+        INSERT INTO corporate_wellness.steplengthistory (user_id, step_length, timestamp_update)
+        VALUES (NEW.user_id, NEW.step_length, now());
+    END IF;
+	RETURN NEW;
+END;
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER update_steplength_trigger
+AFTER UPDATE ON corporate_wellness.profile
+FOR EACH ROW
+EXECUTE FUNCTION update_steplength_function();
+
+---------------------------------------------------------------------
+
 CREATE TABLE IF NOT EXISTS corporate_wellness.profileauth
 (
     auth_id SERIAL PRIMARY KEY,
