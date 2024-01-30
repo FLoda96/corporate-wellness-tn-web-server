@@ -23,7 +23,8 @@ CREATE TABLE IF NOT EXISTS corporate_wellness.profile
     waistline numeric(6,2),
     height numeric(6,2),
     weight numeric(6,2),
-    heart_rate numeric(6,2)
+    heart_rate numeric(6,2),
+    step_length numeric(6,2)
 );
 
 ---------------------------------------------------------------------

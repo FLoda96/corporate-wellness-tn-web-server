@@ -69,6 +69,10 @@ public class Profile {
     @JsonProperty("heart_rate")
     private BigDecimal heart_rate;
 
+    @Column(name = "step_length")
+    @JsonProperty("step_length")
+    private BigDecimal stepLength;
+
     public Profile() {}
 
     public Profile(
@@ -83,7 +87,8 @@ public class Profile {
             @JsonProperty("waistline") BigDecimal waistline,
             @JsonProperty("height") BigDecimal height,
             @JsonProperty("weight") BigDecimal weight,
-            @JsonProperty("heart_rate") BigDecimal heart_rate) {
+            @JsonProperty("heart_rate") BigDecimal heart_rate,
+            @JsonProperty("step_length") BigDecimal stepLength) {
         this.user_id = user_id;
         this.companyId = companyId;
         this.name = name;
@@ -96,6 +101,7 @@ public class Profile {
         this.height = height;
         this.weight = weight;
         this.heart_rate = heart_rate;
+        this.stepLength = stepLength;
     }
 
     // Getter and setter methods...
@@ -113,6 +119,7 @@ public class Profile {
                 ", height='" + height + '\'' +
                 ", weight='" + weight + '\'' +
                 ", heart_rate='" + heart_rate + '\'' +
+                ", stepLength='" + stepLength + '\'' +
                 '}';
     }
 
@@ -160,6 +167,10 @@ public class Profile {
         return heart_rate;
     }
 
+    public BigDecimal getStepLength() {
+        return stepLength;
+    }
+
     // Setter methods
     public void setUser_id(int user_id) {
         this.user_id = user_id;
@@ -202,6 +213,8 @@ public class Profile {
         this.heart_rate = heart_rate;
     }
 
+    public void setStepLength(BigDecimal stepLength) { this.stepLength = stepLength; }
+
     public static void updateProfile(Profile profile1, Profile profile2) {
         profile1.setName(profile2.getName());
         profile1.setSurname(profile2.getSurname());
@@ -213,5 +226,6 @@ public class Profile {
         profile1.setHeight(profile2.getHeight());
         profile1.setWeight(profile2.getWeight());
         profile1.setHeart_rate(profile2.getHeart_rate());
+        profile1.setStepLength(profile2.getStepLength());
     }
 }
