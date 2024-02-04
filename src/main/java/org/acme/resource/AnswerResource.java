@@ -11,6 +11,7 @@ import jakarta.ws.rs.core.Response;
 import org.acme.model.Answer;
 import org.jboss.logging.Logger;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Path("/answer")
@@ -24,13 +25,23 @@ public class AnswerResource {
     EntityManager entityManager;
     private static final Logger LOG = Logger.getLogger(AnswerResource.class);
 
-    /*@GET
-    @Path("/all")
-    public List<Answer> GetAllAnswers() {
-        return entityManager.createNamedQuery("Answer.findAll", Answer.class)
+    @GET
+    @Path("/lastanswer/{user_id}/{questionnaire_id}")
+    public Answer GetAllAnswers(int user_id, int questionnaire_id) {
+        List<Answer> answers = null;
+        answers =  entityManager.createNamedQuery("Answer.findLastTimeQuestionnaire", Answer.class)
+                .setParameter("userId", user_id)
+                .setParameter("questionnaireId", questionnaire_id)
                 .getResultList();
-    }
 
+        answers.sort(Comparator.comparing(Answer::getTimestampAnswer).reversed());
+
+        // Retrieve the first answer (which is now the latest one chronologically)
+        Answer lastAnswer = answers.isEmpty() ? null : answers.get(0);
+
+        return lastAnswer;
+    }
+    /*
     @GET
     @Path("/user/{user_id}")
     public List<Answer> GetAnswerByUser(String user_id) {

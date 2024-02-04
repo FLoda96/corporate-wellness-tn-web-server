@@ -10,6 +10,7 @@ import java.sql.Timestamp;
 @NamedQuery(name = "Answer.findByUser", query = "SELECT q FROM Answer q WHERE q.userId = :userId")
 @NamedQuery(name = "Answer.findByQuestionnaire", query = "SELECT q FROM Answer q WHERE q.questionnaireId = :questionnaireId")
 @NamedQuery(name = "Answer.findByQuestion", query = "SELECT q FROM Answer q WHERE q.questionId = :questionId")
+@NamedQuery(name = "Answer.findLastTimeQuestionnaire", query = "SELECT q FROM Answer q WHERE q.userId = :userId and q.questionnaireId = :questionnaireId")
 public class Answer {
 
     @Id
